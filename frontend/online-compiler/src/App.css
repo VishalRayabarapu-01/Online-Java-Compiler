@@ -1,0 +1,33 @@
+body {
+  transition: background-color 0.5s, color 0.5s;
+}
+
+body.light-mode {
+  background-color: white;
+  color: black;
+}
+
+body.dark-mode {
+  background-color: #1e1e1e !important;
+  color: white !important;
+}
+
+.container-fluid, .navbar {
+  transition: background-color 0.5s, color 0.5s;
+}
+
+.light-mode .bg-body-tertiary {
+  background-color: #f8f9fa !important;
+}
+
+.dark-mode .bg-body-tertiary {
+  background-color: #1e1e1e !important;
+}
+
+/* .margin-view-overlays{
+  background-color: #f5f5f5;
+} */
+
+.hi{
+  background-color: #f5f5f5;  
+}
