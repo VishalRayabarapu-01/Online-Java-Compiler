@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Online Compiler</title>
+</head>
+<body>
+    <form id="codeForm">
+        <textarea id="code" name="code" placeholder="Enter your code here"></textarea>
+        <button type="submit">Run</button>
+    </form>
+    <div>
+        <pre id="output"></pre>
+        <textarea id="runtimeInput" name="runtimeInput" placeholder="Enter runtime input here"></textarea>
+        <button id="sendInput" type="button" disabled>Send Input</button>
+    </div>
+
+    <script>
+        let socket;
+        
+        document.getElementById('codeForm').addEventListener('submit', function (e) {
+            e.preventDefault();
+            const code = document.getElementById('code').value;
+            socket = new WebSocket('ws://localhost:9091/run');
+            
+            socket.onopen = function () {
+                socket.send(JSON.stringify({ code }));
+            };
+
+            socket.onmessage = function (event) {
+                const message = event.data;
+                document.getElementById('output').textContent += message + '\n';
+            };
+
+            socket.onerror = function (error) {
+                console.error('WebSocket Error:', error);
+            };
+        });
+
+        document.getElementById('sendInput').addEventListener('click', function () {
+            const input = document.getElementById('runtimeInput').value;
+            if (socket) {
+                socket.send(JSON.stringify({ input }));
+                document.getElementById('runtimeInput').value = ''; // Clear the input field
+            }
+        });
+    </script>
+</body>
+</html>
